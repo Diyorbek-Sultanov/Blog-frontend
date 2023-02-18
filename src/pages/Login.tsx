@@ -10,7 +10,6 @@ import {
 
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
 import { useAppSelector } from '../app/hooks/useAppSelector'
-import { signInStart } from '../store/slices/auth'
 import Loader from '../components/Loader'
 
 const Login: React.FC = () => {
@@ -22,7 +21,6 @@ const Login: React.FC = () => {
 
 	const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		dispatch(signInStart())
 	}
 
 	return (

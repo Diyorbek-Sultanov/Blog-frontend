@@ -1,11 +1,17 @@
+import { UserT } from './../../pages/Register'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
 
-const fetchUser = createAsyncThunk('user/fetchUser', async () => {
-	const { data } = await axios.post('/users')
+import { IUser } from './../../service/auth'
+import authService from '../../service/auth'
 
-	return data
-})
+export const fetchUser = createAsyncThunk<IUser, UserT>(
+	'user/fetchUser',
+	async user => {
+		const data = await authService.userRegister(user)
+
+		return data
+	},
+)
 
 enum Status {
 	IDLE = ' idle',
@@ -29,13 +35,20 @@ const initialState: IAuth = {
 const AuthSlice = createSlice({
 	name: 'auth',
 	initialState,
-	reducers: {
-		signInStart(state) {
+	reducers: {},
+	extraReducers: builder => {
+		builder.addCase(fetchUser.pending, state => {
 			state.status = Status.LOADING
-		},
+		})
+		builder.addCase(fetchUser.fulfilled, state => {
+			state.loggedIn = true
+			state.status = Status.SUCCESS
+		})
+		builder.addCase(fetchUser.rejected, state => {
+			state.status = Status.ERROR
+			state.status = Status.IDLE
+		})
 	},
 })
-
-export const { signInStart } = AuthSlice.actions
 
 export default AuthSlice.reducer

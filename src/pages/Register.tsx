@@ -10,8 +10,14 @@ import {
 
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
 import { useAppSelector } from '../app/hooks/useAppSelector'
-import { signInStart } from '../store/slices/auth'
+import { fetchUser } from '../store/slices/auth'
 import Loader from '../components/Loader'
+
+export type UserT = {
+	username: string
+	email: string
+	password: string
+}
 
 const Register: React.FC = () => {
 	const dispatch = useAppDispatch()
@@ -23,7 +29,10 @@ const Register: React.FC = () => {
 
 	const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		dispatch(signInStart())
+
+		const user: UserT = { username: name, email, password }
+
+		dispatch(fetchUser(user))
 	}
 
 	return (
