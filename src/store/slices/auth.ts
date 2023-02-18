@@ -1,6 +1,6 @@
-import { UserT } from './../../pages/Register'
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
+import { UserT } from './../../pages/Register'
 import { IUser } from './../../service/auth'
 import authService from '../../service/auth'
 
@@ -8,6 +8,15 @@ export const fetchUser = createAsyncThunk<IUser, UserT>(
 	'user/fetchUser',
 	async user => {
 		const data = await authService.userRegister(user)
+
+		return data
+	},
+)
+
+export const fetchUserLogin = createAsyncThunk<IUser, UserT>(
+	'user/fetchUserLogin',
+	async user => {
+		const data = await authService.userLogin(user)
 
 		return data
 	},
@@ -22,14 +31,16 @@ enum Status {
 
 interface IAuth {
 	status: Status
-	user: null
+	user: IUser
 	loggedIn: boolean
+	error: null
 }
 
 const initialState: IAuth = {
 	status: Status.IDLE,
-	user: null,
+	user: {} as IUser,
 	loggedIn: false,
+	error: null,
 }
 
 const AuthSlice = createSlice({
@@ -37,16 +48,32 @@ const AuthSlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: builder => {
+		// ? Register
 		builder.addCase(fetchUser.pending, state => {
 			state.status = Status.LOADING
 		})
-		builder.addCase(fetchUser.fulfilled, state => {
+		builder.addCase(fetchUser.fulfilled, (state, action) => {
 			state.loggedIn = true
 			state.status = Status.SUCCESS
+			state.user = action.payload
 		})
 		builder.addCase(fetchUser.rejected, state => {
 			state.status = Status.ERROR
-			state.status = Status.IDLE
+		})
+		// ? Login
+		builder.addCase(fetchUserLogin.pending, state => {
+			state.status = Status.LOADING
+		})
+		builder.addCase(
+			fetchUserLogin.fulfilled,
+			(state, action: PayloadAction<IUser>) => {
+				state.loggedIn = true
+				state.status = Status.SUCCESS
+				state.user = action.payload
+			},
+		)
+		builder.addCase(fetchUserLogin.rejected, state => {
+			state.status = Status.ERROR
 		})
 	},
 })

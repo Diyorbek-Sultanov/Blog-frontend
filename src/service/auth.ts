@@ -21,6 +21,12 @@ const authService = {
 
 		return data
 	},
+
+	async userLogin(user: UserT) {
+		const { data } = await axios.post<IUser>('/users/login', { user })
+
+		return data
+	},
 }
 
 export default authService

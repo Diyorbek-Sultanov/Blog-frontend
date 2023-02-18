@@ -11,6 +11,8 @@ import {
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
 import { useAppSelector } from '../app/hooks/useAppSelector'
 import Loader from '../components/Loader'
+import { fetchUserLogin } from '../store/slices/auth'
+import { UserT } from './Register'
 
 const Login: React.FC = () => {
 	const dispatch = useAppDispatch()
@@ -21,6 +23,10 @@ const Login: React.FC = () => {
 
 	const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+
+		const user: UserT = { email, password }
+
+		dispatch(fetchUserLogin(user))
 	}
 
 	return (

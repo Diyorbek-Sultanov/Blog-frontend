@@ -14,7 +14,7 @@ import { fetchUser } from '../store/slices/auth'
 import Loader from '../components/Loader'
 
 export type UserT = {
-	username: string
+	username?: string
 	email: string
 	password: string
 }
