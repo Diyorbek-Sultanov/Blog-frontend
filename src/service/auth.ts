@@ -4,15 +4,19 @@ import { UserT } from './../pages/Register'
 
 axios.defaults.baseURL = 'http://localhost:3000/api'
 
-export interface IUser {
-	updatedAt: Date
-	createdAt: Date
-	bio: string
-	image: string
-	username: string
-	email: string
+export interface User {
 	id: string
+	email: string
+	username: string
+	image: string
+	bio: string
+	createdAt: Date
+	updatedAt: Date
 	token: string
+}
+
+export interface IUser {
+	user: User
 }
 
 const authService = {

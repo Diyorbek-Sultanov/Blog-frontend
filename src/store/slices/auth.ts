@@ -1,24 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
 import { UserT } from './../../pages/Register'
-import { IUser } from './../../service/auth'
+import { User } from './../../service/auth'
 import authService from '../../service/auth'
+import { addLocalStorage } from './../../utils/addStorage'
 
-export const fetchUser = createAsyncThunk<IUser, UserT>(
+export const fetchUser = createAsyncThunk<User, UserT>(
 	'user/fetchUser',
 	async user => {
 		const data = await authService.userRegister(user)
-
-		return data
+		return data.user
 	},
 )
 
-export const fetchUserLogin = createAsyncThunk<IUser, UserT>(
+export const fetchUserLogin = createAsyncThunk<User, UserT>(
 	'user/fetchUserLogin',
 	async user => {
 		const data = await authService.userLogin(user)
-
-		return data
+		return data.user
 	},
 )
 
@@ -31,16 +30,14 @@ enum Status {
 
 interface IAuth {
 	status: Status
-	user: IUser
+	user: User
 	loggedIn: boolean
-	error: null
 }
 
 const initialState: IAuth = {
 	status: Status.IDLE,
-	user: {} as IUser,
+	user: {} as User,
 	loggedIn: false,
-	error: null,
 }
 
 const AuthSlice = createSlice({
@@ -52,13 +49,18 @@ const AuthSlice = createSlice({
 		builder.addCase(fetchUser.pending, state => {
 			state.status = Status.LOADING
 		})
-		builder.addCase(fetchUser.fulfilled, (state, action) => {
-			state.loggedIn = true
-			state.status = Status.SUCCESS
-			state.user = action.payload
-		})
+		builder.addCase(
+			fetchUser.fulfilled,
+			(state, action: PayloadAction<User>) => {
+				state.loggedIn = true
+				state.status = Status.SUCCESS
+				state.user = action.payload
+				addLocalStorage('token', action.payload.token)
+			},
+		)
 		builder.addCase(fetchUser.rejected, state => {
 			state.status = Status.ERROR
+			state.loggedIn = false
 		})
 		// ? Login
 		builder.addCase(fetchUserLogin.pending, state => {
@@ -66,14 +68,16 @@ const AuthSlice = createSlice({
 		})
 		builder.addCase(
 			fetchUserLogin.fulfilled,
-			(state, action: PayloadAction<IUser>) => {
+			(state, action: PayloadAction<User>) => {
 				state.loggedIn = true
 				state.status = Status.SUCCESS
 				state.user = action.payload
+				localStorage.setItem('token', action.payload.token)
 			},
 		)
 		builder.addCase(fetchUserLogin.rejected, state => {
 			state.status = Status.ERROR
+			state.loggedIn = false
 		})
 	},
 })
