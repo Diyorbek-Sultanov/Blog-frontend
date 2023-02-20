@@ -6,8 +6,11 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
 import { CssBaseline } from '@mui/material'
+import { useAppSelector } from '../app/hooks/useAppSelector'
 
 const Navbar: React.FC = () => {
+	const { user, loggedIn } = useAppSelector(state => state.Auth)
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<CssBaseline />
@@ -88,14 +91,32 @@ const Navbar: React.FC = () => {
 							</svg>
 						</Box>
 					</Typography>
-					<Link className='none' to='/login'>
-						<Button sx={{ marginRight: '10px' }} variant='contained'>
-							Login
-						</Button>
-					</Link>
-					<Link className='none' to='/register'>
-						<Button variant='contained'>Register</Button>
-					</Link>
+					{loggedIn ? (
+						<>
+							<Typography
+								variant='h6'
+								sx={{ textTransform: 'capitalize', cursor: 'default' }}
+								color={'#000'}
+								mr={2}
+							>
+								{user.username}
+							</Typography>
+							<Button variant='contained' color={'error'}>
+								Log Out
+							</Button>
+						</>
+					) : (
+						<>
+							<Link className='none' to='/login'>
+								<Button sx={{ marginRight: '10px' }} variant='contained'>
+									Login
+								</Button>
+							</Link>
+							<Link className='none' to='/register'>
+								<Button variant='contained'>Register</Button>
+							</Link>
+						</>
+					)}
 				</Toolbar>
 			</AppBar>
 		</Box>

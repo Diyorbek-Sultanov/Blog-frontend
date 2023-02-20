@@ -7,6 +7,8 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
 import { useAppSelector } from '../app/hooks/useAppSelector'
@@ -15,8 +17,9 @@ import { fetchUserLogin } from '../store/slices/auth'
 import { UserT } from './Register'
 
 const Login: React.FC = () => {
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { status } = useAppSelector(state => state.Auth)
+	const { status, loggedIn } = useAppSelector(state => state.Auth)
 
 	const [email, setEmail] = React.useState<string>('')
 	const [password, setPassword] = React.useState<string>('')
@@ -27,7 +30,15 @@ const Login: React.FC = () => {
 		const user: UserT = { email, password }
 
 		dispatch(fetchUserLogin(user))
+		toast.success('Login muvaffaqiyatli boldi')
+		navigate('/')
 	}
+
+	React.useEffect(() => {
+		if (loggedIn) {
+			navigate('/')
+		}
+	}, [])
 
 	return (
 		<Container component={'main'} maxWidth={'xs'}>

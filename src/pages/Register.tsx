@@ -7,6 +7,8 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
 import { useAppSelector } from '../app/hooks/useAppSelector'
@@ -20,8 +22,9 @@ export type UserT = {
 }
 
 const Register: React.FC = () => {
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { status } = useAppSelector(state => state.Auth)
+	const { status, loggedIn } = useAppSelector(state => state.Auth)
 
 	const [name, setName] = React.useState<string>('')
 	const [email, setEmail] = React.useState<string>('')
@@ -33,7 +36,15 @@ const Register: React.FC = () => {
 		const user: UserT = { username: name, email, password }
 
 		dispatch(fetchUser(user))
+		toast.success('Registratsiya muvaffaqiyatli boldi')
+		navigate('/')
 	}
+
+	React.useEffect(() => {
+		if (loggedIn) {
+			navigate('/')
+		}
+	}, [])
 
 	return (
 		<Container component={'main'} maxWidth={'xs'}>
