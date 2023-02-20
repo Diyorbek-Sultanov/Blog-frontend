@@ -21,6 +21,14 @@ export const fetchUserLogin = createAsyncThunk<User, UserT>(
 	},
 )
 
+export const fetchUserGet = createAsyncThunk<User>(
+	'user/fetchUserGet',
+	async () => {
+		const data = await authService.getUser()
+		return data.user
+	},
+)
+
 enum Status {
 	IDLE = ' idle',
 	LOADING = 'loading',
@@ -43,7 +51,11 @@ const initialState: IAuth = {
 const AuthSlice = createSlice({
 	name: 'auth',
 	initialState,
-	reducers: {},
+	reducers: {
+		signGetUser(state, action: PayloadAction<User>) {
+			state.user = action.payload
+		},
+	},
 	extraReducers: builder => {
 		// ? Register
 		builder.addCase(fetchUser.pending, state => {
@@ -76,6 +88,22 @@ const AuthSlice = createSlice({
 			},
 		)
 		builder.addCase(fetchUserLogin.rejected, state => {
+			state.status = Status.ERROR
+			state.loggedIn = false
+		})
+		// ? GetUser
+		builder.addCase(fetchUserGet.pending, state => {
+			state.status = Status.LOADING
+		})
+		builder.addCase(
+			fetchUserGet.fulfilled,
+			(state, action: PayloadAction<User>) => {
+				state.status = Status.SUCCESS
+				state.user = action.payload
+				state.loggedIn = true
+			},
+		)
+		builder.addCase(fetchUserGet.rejected, state => {
 			state.status = Status.ERROR
 			state.loggedIn = false
 		})
