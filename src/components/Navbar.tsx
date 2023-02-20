@@ -4,12 +4,23 @@ import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { CssBaseline } from '@mui/material'
 import { useAppSelector } from '../app/hooks/useAppSelector'
+import { removeItem } from '../utils/removeStorage'
+import { useAppDispatch } from '../app/hooks/useAppDispatch'
+import { logout } from '../store/slices/auth'
 
 const Navbar: React.FC = () => {
 	const { user, loggedIn } = useAppSelector(state => state.Auth)
+	const dispatch = useAppDispatch()
+	const navigate = useNavigate()
+
+	const logOutHandlar = () => {
+		dispatch(logout())
+		removeItem('token')
+		navigate('/login')
+	}
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
@@ -101,7 +112,11 @@ const Navbar: React.FC = () => {
 							>
 								{user.username}
 							</Typography>
-							<Button variant='contained' color={'error'}>
+							<Button
+								onClick={logOutHandlar}
+								variant='contained'
+								color={'error'}
+							>
 								Log Out
 							</Button>
 						</>
