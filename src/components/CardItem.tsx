@@ -14,11 +14,13 @@ import { Article } from '../service/articles'
 const CardItem: React.FC<Article> = ({ title, author, description }) => {
 	return (
 		<Grid item xs={12} sm={6} md={6} lg={4}>
-			<Card sx={{ height: '100%' }}>
+			<Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
 				<CardMedia
+					sx={{
+						maxHeight: '250px',
+					}}
+					image='https://via.placeholder.com/300/0A2647/fff.png'
 					component={'img'}
-					image={'https://source.unsplash.com/random'}
-					alt='image'
 				/>
 				<CardContent sx={{ flexGrow: 1 }}>
 					<Typography
@@ -32,13 +34,21 @@ const CardItem: React.FC<Article> = ({ title, author, description }) => {
 					</Typography>
 					<Typography paragraph>{description}</Typography>
 				</CardContent>
-				<CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+				<CardActions
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+					}}
+				>
 					<Stack direction={'row'} spacing={1}>
 						<Button size='small' variant='contained'>
 							View
 						</Button>
-						<Button size='small' variant='contained' color='error'>
+						<Button size='small' variant='contained' color='info'>
 							Edit
+						</Button>
+						<Button size='small' variant='contained' color='error'>
+							Delete
 						</Button>
 					</Stack>
 					<Typography

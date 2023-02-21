@@ -110,7 +110,11 @@ const Register: React.FC = () => {
 						disabled={status === 'loading'}
 						fullWidth
 					>
-						{status === 'loading' ? <Loader /> : 'Sign Up'}
+						{status === 'loading' ? (
+							<Loader width='20' height='20' />
+						) : (
+							'Sign Up'
+						)}
 					</Button>
 				</Box>
 			</Box>

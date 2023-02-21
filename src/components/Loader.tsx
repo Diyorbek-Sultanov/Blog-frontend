@@ -1,13 +1,18 @@
 import React from 'react'
 
-const Loader: React.FC = () => {
+type LoaderT = {
+	width: string
+	height: string
+}
+
+const Loader: React.FC<LoaderT> = ({ width, height }) => {
 	return (
 		<div className='loader'>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				xmlnsXlink='http://www.w3.org/1999/xlink'
-				width='20px'
-				height='20px'
+				width={width}
+				height={height}
 				viewBox='0 0 100 100'
 				preserveAspectRatio='xMidYMid'
 			>

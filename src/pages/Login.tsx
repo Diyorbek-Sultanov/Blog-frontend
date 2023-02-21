@@ -91,7 +91,11 @@ const Login: React.FC = () => {
 						type='submit'
 						fullWidth
 					>
-						{status === 'loading' ? <Loader /> : 'Sign In'}
+						{status === 'loading' ? (
+							<Loader width='20' height='20' />
+						) : (
+							'Sign In'
+						)}
 					</Button>
 				</Box>
 			</Box>
