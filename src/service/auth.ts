@@ -1,16 +1,5 @@
-import axios, { InternalAxiosRequestConfig } from 'axios'
-
+import axios from './axios.config'
 import { UserT } from './../pages/Register'
-import { getItem } from './../utils/getStorage'
-
-axios.defaults.baseURL = 'http://localhost:3000/api'
-axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-	const token = getItem('token')
-	const authorazition = token ? `Token ${token}` : ''
-	config.headers.Authorization = authorazition
-
-	return config
-})
 
 export interface User {
 	id: string
@@ -27,7 +16,7 @@ export interface IUser {
 	user: User
 }
 
-const authService = {
+const AuthService = {
 	async userRegister(user: UserT) {
 		const { data } = await axios.post<IUser>('/users', { user })
 
@@ -47,4 +36,4 @@ const authService = {
 	},
 }
 
-export default authService
+export default AuthService

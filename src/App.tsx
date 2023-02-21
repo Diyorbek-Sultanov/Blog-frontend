@@ -6,6 +6,7 @@ import MainLayout from './layout/MainLayout'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import { fetchArticles } from './store/slices/article'
 import { fetchUserGet } from './store/slices/auth'
 import { getItem } from './utils/getStorage'
 
@@ -29,6 +30,7 @@ const App: React.FC = () => {
 
 	React.useEffect(() => {
 		getUser()
+		dispatch(fetchArticles())
 	}, [])
 
 	return (

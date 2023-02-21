@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
 import { UserT } from './../../pages/Register'
 import { User } from './../../service/auth'
-import authService from '../../service/auth'
+import AuthService from '../../service/auth'
 import { addLocalStorage } from './../../utils/addStorage'
 
 export const fetchUser = createAsyncThunk<User, UserT>(
 	'user/fetchUser',
 	async user => {
-		const data = await authService.userRegister(user)
+		const data = await AuthService.userRegister(user)
 		return data.user
 	},
 )
@@ -16,7 +16,7 @@ export const fetchUser = createAsyncThunk<User, UserT>(
 export const fetchUserLogin = createAsyncThunk<User, UserT>(
 	'user/fetchUserLogin',
 	async user => {
-		const data = await authService.userLogin(user)
+		const data = await AuthService.userLogin(user)
 		return data.user
 	},
 )
@@ -24,12 +24,12 @@ export const fetchUserLogin = createAsyncThunk<User, UserT>(
 export const fetchUserGet = createAsyncThunk<User>(
 	'user/fetchUserGet',
 	async () => {
-		const data = await authService.getUser()
+		const data = await AuthService.getUser()
 		return data.user
 	},
 )
 
-enum Status {
+export enum Status {
 	IDLE = ' idle',
 	LOADING = 'loading',
 	SUCCESS = 'success',
