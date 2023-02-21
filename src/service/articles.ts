@@ -32,6 +32,12 @@ const ArticleService = {
 
 		return data
 	},
+
+	async getArticleDetail(slug: string | undefined) {
+		const { data } = await axios.get<Article>(`/articles/${slug}`)
+
+		return data
+	},
 }
 
 export default ArticleService

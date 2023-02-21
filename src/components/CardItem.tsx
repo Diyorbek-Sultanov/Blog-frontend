@@ -1,3 +1,4 @@
+import React from 'react'
 import {
 	Grid,
 	Card,
@@ -8,10 +9,13 @@ import {
 	Button,
 	Stack,
 } from '@mui/material'
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { Article } from '../service/articles'
 
-const CardItem: React.FC<Article> = ({ title, author, description }) => {
+const CardItem: React.FC<Article> = ({ title, slug, author, description }) => {
+	const navigate = useNavigate()
+
 	return (
 		<Grid item xs={12} sm={6} md={6} lg={4}>
 			<Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -41,7 +45,11 @@ const CardItem: React.FC<Article> = ({ title, author, description }) => {
 					}}
 				>
 					<Stack direction={'row'} spacing={1}>
-						<Button size='small' variant='contained'>
+						<Button
+							onClick={() => navigate(`/articles/${slug}`)}
+							size='small'
+							variant='contained'
+						>
 							View
 						</Button>
 						<Button size='small' variant='contained' color='info'>
