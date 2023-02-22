@@ -14,11 +14,15 @@ export interface Article {
 	body: string
 	description: string
 	favoritesCount: number
-	createdAt: Date
-	updatedAt: Date
+	createdAt: string
+	updatedAt: string
 	favorited: boolean
 	author: Author
 	tagList: any[]
+}
+
+export interface ArticleSlice {
+	article: Article
 }
 
 export interface IArticles {
@@ -34,7 +38,7 @@ const ArticleService = {
 	},
 
 	async getArticleDetail(slug: string | undefined) {
-		const { data } = await axios.get<Article>(`/articles/${slug}`)
+		const { data } = await axios.get<ArticleSlice>(`/articles/${slug}`)
 
 		return data
 	},

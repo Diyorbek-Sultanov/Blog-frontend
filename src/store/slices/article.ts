@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { Status } from './auth'
-import ArticleService, { Article } from '../../service/articles'
+import ArticleService, { Article, ArticleSlice } from '../../service/articles'
 
 export const fetchArticles = createAsyncThunk<Article[]>(
 	'article/fetchArticles',
@@ -16,7 +16,7 @@ export const fetchArticleDetail = createAsyncThunk<Article, string | undefined>(
 	async slug => {
 		const data = await ArticleService.getArticleDetail(slug)
 
-		return data
+		return data.article
 	},
 )
 

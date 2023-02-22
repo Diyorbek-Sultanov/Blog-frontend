@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from './app/hooks/useAppDispatch'
-import Loader from './components/Loader'
+import { Loader } from './components'
 import MainLayout from './layout/MainLayout'
 import Home from './pages/Home'
 import Login from './pages/Login'

@@ -2,8 +2,7 @@ import React from 'react'
 import { Box, Grid } from '@mui/material'
 import { Container } from '@mui/system'
 import { useAppSelector } from '../app/hooks/useAppSelector'
-import CardItem from '../components/CardItem'
-import Loader from '../components/Loader'
+import { Loader, CardItem } from '../components'
 
 const Home: React.FC = () => {
 	const { articles, status } = useAppSelector(state => state.Article)
