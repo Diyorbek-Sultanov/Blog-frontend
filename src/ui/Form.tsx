@@ -1,26 +1,35 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from 'react'
+import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import Textarea from '@mui/joy/Textarea'
+import { useAppSelector } from '../app/hooks/useAppSelector'
+import { Loader } from '../components'
 
 type FormT = {
 	title: string
-	descr: string
+	description: string
 	body: string
 	setTitle: Dispatch<SetStateAction<string>>
-	setDescr: Dispatch<SetStateAction<string>>
+	setDescription: Dispatch<SetStateAction<string>>
 	setBody: Dispatch<SetStateAction<string>>
+	handlerSubmit: (e: FormEvent<HTMLFormElement>) => void
 }
 
 const Form: React.FC<FormT> = ({
 	body,
-	descr,
+	description,
 	title,
 	setTitle,
 	setBody,
-	setDescr,
+	setDescription,
+	handlerSubmit,
 }) => {
+	const { status } = useAppSelector(state => state.Article)
+
 	return (
-		<Box component='form'>
+		<Box
+			component='form'
+			onSubmit={(e: FormEvent<HTMLFormElement>) => handlerSubmit(e)}
+		>
 			<TextField
 				name='text'
 				label='Title'
@@ -41,9 +50,9 @@ const Form: React.FC<FormT> = ({
 				minRows={5}
 				size='lg'
 				variant='plain'
-				value={descr}
+				value={description}
 				onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-					setDescr(e.target.value)
+					setDescription(e.target.value)
 				}
 				sx={{ mb: 3, border: '1px solid #054da7' }}
 			/>
@@ -60,8 +69,13 @@ const Form: React.FC<FormT> = ({
 				}
 				sx={{ mb: 3, border: '1px solid #054da7' }}
 			/>
-			<Button variant='contained' color='secondary'>
-				Create
+			<Button
+				type='submit'
+				variant='contained'
+				color='secondary'
+				disabled={status === 'loading'}
+			>
+				{status === 'loading' ? <Loader width='20' height='20' /> : 'Create'}
 			</Button>
 		</Box>
 	)

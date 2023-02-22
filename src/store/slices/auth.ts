@@ -61,6 +61,7 @@ const AuthSlice = createSlice({
 		// ? Register
 		builder.addCase(fetchUser.pending, state => {
 			state.status = Status.LOADING
+			state.user = {} as User
 		})
 		builder.addCase(
 			fetchUser.fulfilled,
@@ -74,10 +75,12 @@ const AuthSlice = createSlice({
 		builder.addCase(fetchUser.rejected, state => {
 			state.status = Status.ERROR
 			state.loggedIn = false
+			state.user = {} as User
 		})
 		// ? Login
 		builder.addCase(fetchUserLogin.pending, state => {
 			state.status = Status.LOADING
+			state.user = {} as User
 		})
 		builder.addCase(
 			fetchUserLogin.fulfilled,
@@ -91,10 +94,12 @@ const AuthSlice = createSlice({
 		builder.addCase(fetchUserLogin.rejected, state => {
 			state.status = Status.ERROR
 			state.loggedIn = false
+			state.user = {} as User
 		})
 		// ? GetUser
 		builder.addCase(fetchUserGet.pending, state => {
 			state.status = Status.LOADING
+			state.user = {} as User
 		})
 		builder.addCase(
 			fetchUserGet.fulfilled,
@@ -107,6 +112,7 @@ const AuthSlice = createSlice({
 		builder.addCase(fetchUserGet.rejected, state => {
 			state.status = Status.ERROR
 			state.loggedIn = false
+			state.user = {} as User
 		})
 	},
 })

@@ -1,3 +1,4 @@
+import { ArticlesT } from '../pages/CreateArticle'
 import axios from './axios.config'
 
 export interface Author {
@@ -39,6 +40,12 @@ const ArticleService = {
 
 	async getArticleDetail(slug: string | undefined) {
 		const { data } = await axios.get<ArticleSlice>(`/articles/${slug}`)
+
+		return data
+	},
+
+	async createArticle(article: ArticlesT) {
+		const { data } = await axios.post<ArticleSlice>('/articles', { article })
 
 		return data
 	},
