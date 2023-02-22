@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { Link, useNavigate } from 'react-router-dom'
-import { CssBaseline } from '@mui/material'
+import { CssBaseline, Stack } from '@mui/material'
 import { useAppSelector } from '../app/hooks/useAppSelector'
 import { removeItem } from '../utils/removeStorage'
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
@@ -103,7 +103,7 @@ const Navbar: React.FC = () => {
 						</Box>
 					</Typography>
 					{loggedIn ? (
-						<>
+						<Stack direction={'row'} columnGap={2}>
 							<Typography
 								variant='h6'
 								sx={{ textTransform: 'capitalize', cursor: 'default' }}
@@ -112,6 +112,11 @@ const Navbar: React.FC = () => {
 							>
 								{user.username}
 							</Typography>
+							<Link className='none' to={'/create-article'}>
+								<Button variant='contained' color={'success'}>
+									Create
+								</Button>
+							</Link>
 							<Button
 								onClick={logOutHandlar}
 								variant='contained'
@@ -119,7 +124,7 @@ const Navbar: React.FC = () => {
 							>
 								Log Out
 							</Button>
-						</>
+						</Stack>
 					) : (
 						<>
 							<Link className='none' to='/login'>

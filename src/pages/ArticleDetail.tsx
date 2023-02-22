@@ -72,6 +72,7 @@ const ArticleDetail: React.FC = () => {
 							<Typography variant={'h6'}>{article?.title}</Typography>
 							<Typography paragraph>{article?.description}</Typography>
 							<Typography paragraph>
+								<span className='span'>Created at:</span>
 								{moment(article?.createdAt).format('MMM Do YYYY')}
 							</Typography>
 						</Stack>

@@ -12,6 +12,7 @@ import { fetchUserGet } from './store/slices/auth'
 import { getItem } from './utils/getStorage'
 
 const ArticleDetail = lazy(() => import('./pages/ArticleDetail'))
+const CreateArticle = lazy(() => import('./pages/CreateArticle'))
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch()
@@ -47,6 +48,14 @@ const App: React.FC = () => {
 					element={
 						<Suspense fallback={<Loader width='50' height='50' />}>
 							<ArticleDetail />
+						</Suspense>
+					}
+				/>
+				<Route
+					path='create-article'
+					element={
+						<Suspense fallback={<Loader width='50' height='50' />}>
+							<CreateArticle />
 						</Suspense>
 					}
 				/>
