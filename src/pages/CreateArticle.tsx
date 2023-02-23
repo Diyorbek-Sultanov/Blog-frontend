@@ -23,7 +23,9 @@ const CreateArticle: React.FC = () => {
 
 	const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+
 		const article: ArticlesT = { title, description, body }
+
 		dispatch(fetchArticleCreate(article))
 		navigate('/')
 	}
@@ -56,3 +58,5 @@ const CreateArticle: React.FC = () => {
 		</Box>
 	)
 }
+
+export default CreateArticle
