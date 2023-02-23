@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import Textarea from '@mui/joy/Textarea'
+import { useLocation } from 'react-router-dom'
 import { useAppSelector } from '../app/hooks/useAppSelector'
 import { Loader } from '../components'
 
@@ -12,6 +13,8 @@ type FormT = {
 	setDescription: Dispatch<SetStateAction<string>>
 	setBody: Dispatch<SetStateAction<string>>
 	handlerSubmit: (e: FormEvent<HTMLFormElement>) => void
+	edit: string
+	create: string
 }
 
 const Form: React.FC<FormT> = ({
@@ -22,8 +25,13 @@ const Form: React.FC<FormT> = ({
 	setBody,
 	setDescription,
 	handlerSubmit,
+	edit,
+	create,
 }) => {
 	const { status } = useAppSelector(state => state.Article)
+	const location = useLocation()
+
+	console.log(location)
 
 	return (
 		<Box
@@ -75,7 +83,13 @@ const Form: React.FC<FormT> = ({
 				color='secondary'
 				disabled={status === 'loading'}
 			>
-				{status === 'loading' ? <Loader width='20' height='20' /> : 'Create'}
+				{status === 'loading' ? (
+					<Loader width='20' height='20' />
+				) : location.pathname === '/create-article' ? (
+					create
+				) : (
+					edit
+				)}
 			</Button>
 		</Box>
 	)

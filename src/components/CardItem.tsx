@@ -68,7 +68,12 @@ const CardItem: React.FC<Article> = ({ title, slug, author, description }) => {
 						</Button>
 						{loggedIn && user.username === author.username && (
 							<>
-								<Button size='small' variant='contained' color='info'>
+								<Button
+									size='small'
+									variant='contained'
+									color='info'
+									onClick={() => navigate(`/edit-article/${slug}`)}
+								>
 									Edit
 								</Button>
 								<Button

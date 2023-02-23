@@ -1,20 +1,17 @@
 import React, { FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Box, Button, Container, Typography } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import toast from 'react-hot-toast'
 
-import Form from '../ui/Form'
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
-import { fetchArticleCreate } from '../store/slices/article'
+import { fetchArticleDetail } from '../store/slices/article'
+import Form from '../ui/Form'
+import toast from 'react-hot-toast'
+import { useAppSelector } from '../app/hooks/useAppSelector'
 
-export type ArticlesT = {
-	title: string
-	description: string
-	body: string
-}
-
-const CreateArticle: React.FC = () => {
+const EditArticle: React.FC = () => {
+	const { slug } = useParams()
+	const { article } = useAppSelector(state => state.Article)
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 
@@ -22,13 +19,18 @@ const CreateArticle: React.FC = () => {
 	const [description, setDescription] = React.useState<string>('')
 	const [body, setBody] = React.useState<string>('')
 
+	React.useEffect(() => {
+		dispatch(fetchArticleDetail(slug))
+
+		setTitle(article.title)
+		setDescription(article.description)
+		setBody(article.body)
+	}, [slug])
+
 	const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
-		const article: ArticlesT = { title, description, body }
-
-		dispatch(fetchArticleCreate(article))
-		toast.success('Article yaratildi')
+		toast.success('Article update qilindi')
 		navigate('/')
 	}
 
@@ -55,12 +57,12 @@ const CreateArticle: React.FC = () => {
 					body={body}
 					setBody={setBody}
 					handlerSubmit={(e: FormEvent<HTMLFormElement>) => handlerSubmit(e)}
-					create={'Create'}
 					edit={'Edit'}
+					create={'Create'}
 				/>
 			</Container>
 		</Box>
 	)
 }
 
-export default CreateArticle
+export default EditArticle

@@ -76,6 +76,10 @@ const ArticleDetail: React.FC = () => {
 								<span className='span'>Created at:</span>
 								{moment(article?.createdAt).format('MMM Do YYYY')}
 							</Typography>
+							<Typography paragraph>
+								<span className='span'>Updated at:</span>
+								{moment(article?.updatedAt).format('MMM Do YYYY')}
+							</Typography>
 						</Stack>
 					</Paper>
 				)}

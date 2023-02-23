@@ -12,6 +12,7 @@ import { getItem } from './utils/getStorage'
 
 const ArticleDetail = lazy(() => import('./pages/ArticleDetail'))
 const CreateArticle = lazy(() => import('./pages/CreateArticle'))
+const EditArticle = lazy(() => import('./pages/EditArticle'))
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch()
@@ -54,6 +55,14 @@ const App: React.FC = () => {
 					element={
 						<Suspense fallback={<Loader width='50' height='50' />}>
 							<CreateArticle />
+						</Suspense>
+					}
+				/>
+				<Route
+					path='edit-article/:slug'
+					element={
+						<Suspense fallback={<Loader width='50' height='50' />}>
+							<EditArticle />
 						</Suspense>
 					}
 				/>
