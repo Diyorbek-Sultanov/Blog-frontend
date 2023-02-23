@@ -49,6 +49,12 @@ const ArticleService = {
 
 		return data
 	},
+
+	async deleteArticle(slug: string) {
+		const { data } = await axios.delete(`/articles/${slug}`)
+
+		return data
+	},
 }
 
 export default ArticleService

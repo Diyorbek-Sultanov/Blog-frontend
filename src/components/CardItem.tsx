@@ -11,10 +11,24 @@ import {
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-import { Article } from '../service/articles'
+import ArticleService, { Article } from '../service/articles'
+import { useAppSelector } from '../app/hooks/useAppSelector'
+import { fetchArticles } from '../store/slices/article'
+import { useAppDispatch } from '../app/hooks/useAppDispatch'
 
 const CardItem: React.FC<Article> = ({ title, slug, author, description }) => {
 	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
+	const { loggedIn, user } = useAppSelector(state => state.Auth)
+
+	const deleteArticle = async (slug: string) => {
+		try {
+			await ArticleService.deleteArticle(slug)
+			dispatch(fetchArticles())
+		} catch (error) {
+			console.error(error)
+		}
+	}
 
 	return (
 		<Grid item xs={12} sm={6} md={6} lg={4}>
@@ -52,12 +66,21 @@ const CardItem: React.FC<Article> = ({ title, slug, author, description }) => {
 						>
 							View
 						</Button>
-						<Button size='small' variant='contained' color='info'>
-							Edit
-						</Button>
-						<Button size='small' variant='contained' color='error'>
-							Delete
-						</Button>
+						{loggedIn && user.username === author.username && (
+							<>
+								<Button size='small' variant='contained' color='info'>
+									Edit
+								</Button>
+								<Button
+									size='small'
+									variant='contained'
+									color='error'
+									onClick={() => deleteArticle(slug)}
+								>
+									Delete
+								</Button>
+							</>
+						)}
 					</Stack>
 					<Typography
 						sx={{ textTransform: 'capitalize' }}

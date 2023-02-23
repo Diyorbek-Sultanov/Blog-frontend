@@ -2,6 +2,7 @@ import React, { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Box, Button, Container, Typography } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
+import toast from 'react-hot-toast'
 
 import Form from '../ui/Form'
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
@@ -27,6 +28,7 @@ const CreateArticle: React.FC = () => {
 		const article: ArticlesT = { title, description, body }
 
 		dispatch(fetchArticleCreate(article))
+		toast.success('Article yaratildi')
 		navigate('/')
 	}
 
