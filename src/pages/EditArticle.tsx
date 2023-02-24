@@ -4,10 +4,11 @@ import { Box, Button, Container, Typography } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
-import { fetchArticleDetail } from '../store/slices/article'
+import { fetchArticleDetail, fetchArticleEdit } from '../store/slices/article'
 import Form from '../ui/Form'
 import toast from 'react-hot-toast'
 import { useAppSelector } from '../app/hooks/useAppSelector'
+import { ArticlesT } from './CreateArticle'
 
 const EditArticle: React.FC = () => {
 	const { slug } = useParams()
@@ -19,6 +20,8 @@ const EditArticle: React.FC = () => {
 	const [description, setDescription] = React.useState<string>('')
 	const [body, setBody] = React.useState<string>('')
 
+	const slugg: string = slug as string
+
 	React.useEffect(() => {
 		dispatch(fetchArticleDetail(slug))
 
@@ -29,6 +32,10 @@ const EditArticle: React.FC = () => {
 
 	const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+
+		const article: ArticlesT = { title, description, body }
+
+		dispatch(fetchArticleEdit({ slugg, article }))
 
 		toast.success('Article update qilindi')
 		navigate('/')
@@ -57,8 +64,6 @@ const EditArticle: React.FC = () => {
 					body={body}
 					setBody={setBody}
 					handlerSubmit={(e: FormEvent<HTMLFormElement>) => handlerSubmit(e)}
-					edit={'Edit'}
-					create={'Create'}
 				/>
 			</Container>
 		</Box>

@@ -55,8 +55,6 @@ const CreateArticle: React.FC = () => {
 					body={body}
 					setBody={setBody}
 					handlerSubmit={(e: FormEvent<HTMLFormElement>) => handlerSubmit(e)}
-					create={'Create'}
-					edit={'Edit'}
 				/>
 			</Container>
 		</Box>

@@ -31,6 +31,10 @@ export interface IArticles {
 	articlesCount: number
 }
 
+export type SlugT = {
+	slugg: string
+}
+
 const ArticleService = {
 	async getArticles() {
 		const { data } = await axios.get<IArticles>('/articles')
@@ -52,6 +56,14 @@ const ArticleService = {
 
 	async deleteArticle(slug: string) {
 		const { data } = await axios.delete(`/articles/${slug}`)
+
+		return data
+	},
+
+	async editArticle(slug: string, article: ArticlesT) {
+		const { data } = await axios.put<ArticleSlice>(`/articles/${slug}`, {
+			article,
+		})
 
 		return data
 	},

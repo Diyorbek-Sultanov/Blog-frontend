@@ -3,6 +3,11 @@ import { Status } from './auth'
 import ArticleService, { Article, ArticleSlice } from '../../service/articles'
 import { ArticlesT } from '../../pages/CreateArticle'
 
+interface IEdit {
+	article: ArticlesT
+	slugg: string
+}
+
 export const fetchArticles = createAsyncThunk<Article[]>(
 	'article/fetchArticles',
 	async () => {
@@ -25,6 +30,16 @@ export const fetchArticleCreate = createAsyncThunk<Article, ArticlesT>(
 	'article/fetchArticleCreate',
 	async article => {
 		const data = await ArticleService.createArticle(article)
+
+		return data.article
+	},
+)
+
+export const fetchArticleEdit = createAsyncThunk<Article, IEdit>(
+	'article/fetchArticleEdit',
+	async params => {
+		const { article, slugg } = params
+		const data = await ArticleService.editArticle(slugg, article)
 
 		return data.article
 	},
@@ -92,6 +107,22 @@ const ArticleSlice = createSlice({
 			},
 		)
 		builder.addCase(fetchArticleCreate.rejected, state => {
+			state.status = Status.ERROR
+			state.article = {} as Article
+		})
+		// ? EditArticle
+		builder.addCase(fetchArticleEdit.pending, state => {
+			state.status = Status.ERROR
+			state.article = {} as Article
+		})
+		builder.addCase(
+			fetchArticleEdit.fulfilled,
+			(state, action: PayloadAction<Article>) => {
+				state.status = Status.SUCCESS
+				state.article = action.payload
+			},
+		)
+		builder.addCase(fetchArticleEdit.rejected, state => {
 			state.status = Status.ERROR
 			state.article = {} as Article
 		})

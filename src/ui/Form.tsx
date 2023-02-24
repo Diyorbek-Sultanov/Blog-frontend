@@ -13,8 +13,6 @@ type FormT = {
 	setDescription: Dispatch<SetStateAction<string>>
 	setBody: Dispatch<SetStateAction<string>>
 	handlerSubmit: (e: FormEvent<HTMLFormElement>) => void
-	edit: string
-	create: string
 }
 
 const Form: React.FC<FormT> = ({
@@ -25,13 +23,9 @@ const Form: React.FC<FormT> = ({
 	setBody,
 	setDescription,
 	handlerSubmit,
-	edit,
-	create,
 }) => {
 	const { status } = useAppSelector(state => state.Article)
 	const location = useLocation()
-
-	console.log(location)
 
 	return (
 		<Box
@@ -47,9 +41,7 @@ const Form: React.FC<FormT> = ({
 				fullWidth
 				sx={{ mb: 3 }}
 				value={title}
-				onChange={(e: ChangeEvent<HTMLInputElement>) =>
-					setTitle(e.target.value)
-				}
+				onInput={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
 			/>
 			<Textarea
 				name='descr'
@@ -86,9 +78,9 @@ const Form: React.FC<FormT> = ({
 				{status === 'loading' ? (
 					<Loader width='20' height='20' />
 				) : location.pathname === '/create-article' ? (
-					create
+					'Create'
 				) : (
-					edit
+					'Edit'
 				)}
 			</Button>
 		</Box>
