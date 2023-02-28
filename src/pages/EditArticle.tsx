@@ -36,9 +36,18 @@ const EditArticle: React.FC = () => {
 		const article: ArticlesT = { title, description, body }
 
 		dispatch(fetchArticleEdit({ slugg, article }))
-
 		toast.success('Article update qilindi')
 		navigate('/')
+	}
+
+	const formProps = {
+		title,
+		description,
+		body,
+		setTitle,
+		setDescription,
+		setBody,
+		handlerSubmit,
 	}
 
 	return (
@@ -56,15 +65,7 @@ const EditArticle: React.FC = () => {
 				<Typography variant='h4' textAlign={'center'} mb={4}>
 					Create Article
 				</Typography>
-				<Form
-					title={title}
-					setTitle={setTitle}
-					description={description}
-					setDescription={setDescription}
-					body={body}
-					setBody={setBody}
-					handlerSubmit={(e: FormEvent<HTMLFormElement>) => handlerSubmit(e)}
-				/>
+				<Form {...formProps} />
 			</Container>
 		</Box>
 	)

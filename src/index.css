@@ -20,3 +20,12 @@
 	margin-right: 10px;
 	font-weight: 700;
 }
+
+.text-area {
+	outline: none;
+	border: 1px solid #054da7;
+	padding: 12px 15px;
+	font-family: 'Roboto', sans-serif;
+	border-radius: 8px;
+	resize: none;
+}

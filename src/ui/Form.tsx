@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import Textarea from '@mui/joy/Textarea'
+import { TextareaAutosize } from '@mui/base'
 import { useLocation } from 'react-router-dom'
 import { useAppSelector } from '../app/hooks/useAppSelector'
 import { Loader } from '../components'
@@ -31,6 +32,9 @@ const Form: React.FC<FormT> = ({
 		<Box
 			component='form'
 			onSubmit={(e: FormEvent<HTMLFormElement>) => handlerSubmit(e)}
+			display='flex'
+			flexDirection='column'
+			rowGap={2.5}
 		>
 			<TextField
 				name='text'
@@ -39,41 +43,36 @@ const Form: React.FC<FormT> = ({
 				type='text'
 				required
 				fullWidth
-				sx={{ mb: 3 }}
-				value={title}
-				onInput={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+				value={title || ''}
+				onChange={e => setTitle(e.target.value)}
 			/>
-			<Textarea
+			<TextareaAutosize
+				minRows={5}
+				maxRows={10}
 				name='descr'
-				color='primary'
 				placeholder='Enter description'
-				minRows={5}
-				size='lg'
-				variant='plain'
-				value={description}
-				onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-					setDescription(e.target.value)
-				}
-				sx={{ mb: 3, border: '1px solid #054da7' }}
+				value={description || ''}
+				onChange={e => setDescription(e.target.value)}
+				className='text-area'
+				style={{ height: '150px' }}
 			/>
-			<Textarea
-				name='body'
-				color='primary'
-				placeholder='Enter body'
+
+			<TextareaAutosize
 				minRows={5}
-				size='lg'
-				variant='plain'
-				value={body}
-				onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-					setBody(e.target.value)
-				}
-				sx={{ mb: 3, border: '1px solid #054da7' }}
+				maxRows={10}
+				name='body'
+				placeholder='Enter body'
+				value={body || ''}
+				onChange={e => setBody(e.target.value)}
+				className='text-area'
+				style={{ height: '150px' }}
 			/>
 			<Button
 				type='submit'
 				variant='contained'
 				color='secondary'
 				disabled={status === 'loading'}
+				sx={{ width: '100px' }}
 			>
 				{status === 'loading' ? (
 					<Loader width='20' height='20' />

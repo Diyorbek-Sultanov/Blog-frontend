@@ -9,9 +9,9 @@ import { useAppDispatch } from '../app/hooks/useAppDispatch'
 import { fetchArticleCreate } from '../store/slices/article'
 
 export type ArticlesT = {
-	title: string
-	description: string
-	body: string
+	title: string | undefined
+	description: string | undefined
+	body: string | undefined
 }
 
 const CreateArticle: React.FC = () => {
@@ -32,6 +32,16 @@ const CreateArticle: React.FC = () => {
 		navigate('/')
 	}
 
+	const formProps = {
+		title,
+		description,
+		body,
+		setTitle,
+		setDescription,
+		setBody,
+		handlerSubmit,
+	}
+
 	return (
 		<Box component={'section'} mt={7}>
 			<Container maxWidth={'md'}>
@@ -47,15 +57,7 @@ const CreateArticle: React.FC = () => {
 				<Typography variant='h4' textAlign={'center'} mb={4}>
 					Create Article
 				</Typography>
-				<Form
-					title={title}
-					setTitle={setTitle}
-					description={description}
-					setDescription={setDescription}
-					body={body}
-					setBody={setBody}
-					handlerSubmit={(e: FormEvent<HTMLFormElement>) => handlerSubmit(e)}
-				/>
+				<Form {...formProps} />
 			</Container>
 		</Box>
 	)
