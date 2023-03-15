@@ -9,6 +9,7 @@ import Form from '../ui/Form'
 import toast from 'react-hot-toast'
 import { useAppSelector } from '../app/hooks/useAppSelector'
 import { ArticlesT } from './CreateArticle'
+import { Helmet } from 'react-helmet'
 
 const EditArticle: React.FC = () => {
 	const { slug } = useParams()
@@ -52,6 +53,10 @@ const EditArticle: React.FC = () => {
 
 	return (
 		<Box component={'section'} mt={7}>
+			<Helmet>
+				<title>Edit detail</title>
+				<meta name='description' content='the edit article page' />
+			</Helmet>
 			<Container maxWidth={'md'}>
 				<Link className='none' to={'/'}>
 					<Button variant='outlined' sx={{ marginBottom: '25px' }}>
@@ -63,7 +68,7 @@ const EditArticle: React.FC = () => {
 					</Button>
 				</Link>
 				<Typography variant='h4' textAlign={'center'} mb={4}>
-					Create Article
+					Edit Article
 				</Typography>
 				<Form {...formProps} />
 			</Container>

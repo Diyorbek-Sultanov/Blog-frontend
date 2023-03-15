@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Grid } from '@mui/material'
 import { Container } from '@mui/system'
 import { motion } from 'framer-motion'
+import { Helmet } from 'react-helmet'
 
 import { useAppSelector } from '../app/hooks/useAppSelector'
 import { Loader, MCardItem } from '../components'
@@ -31,6 +32,10 @@ const Home: React.FC = () => {
 
 	return (
 		<Box component={motion.main} mb={8} initial='hidden' whileInView='visibble'>
+			<Helmet>
+				<title>Home</title>
+				<meta name='description' content='the home page' />
+			</Helmet>
 			{status === 'loading' ? (
 				<Loader width='50' height='50' />
 			) : (

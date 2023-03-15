@@ -15,6 +15,7 @@ import { useAppSelector } from '../app/hooks/useAppSelector'
 import { Loader } from '../components'
 import { fetchUserLogin } from '../store/slices/auth'
 import { UserT } from './Register'
+import { Helmet } from 'react-helmet'
 
 const Login: React.FC = () => {
 	const navigate = useNavigate()
@@ -42,6 +43,10 @@ const Login: React.FC = () => {
 
 	return (
 		<Container component={'main'} maxWidth={'xs'}>
+			<Helmet>
+				<title>Login</title>
+				<meta name='description' content='the login page' />
+			</Helmet>
 			<CssBaseline />
 			<Box
 				sx={{

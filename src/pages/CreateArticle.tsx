@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 import Form from '../ui/Form'
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
 import { fetchArticleCreate } from '../store/slices/article'
+import { Helmet } from 'react-helmet'
 
 export type ArticlesT = {
 	title: string | undefined
@@ -44,6 +45,10 @@ const CreateArticle: React.FC = () => {
 
 	return (
 		<Box component={'section'} mt={7}>
+			<Helmet>
+				<title>Create detail</title>
+				<meta name='description' content='the create article page' />
+			</Helmet>
 			<Container maxWidth={'md'}>
 				<Link className='none' to={'/'}>
 					<Button variant='outlined' sx={{ marginBottom: '25px' }}>

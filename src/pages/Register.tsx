@@ -14,6 +14,7 @@ import { useAppDispatch } from '../app/hooks/useAppDispatch'
 import { useAppSelector } from '../app/hooks/useAppSelector'
 import { fetchUser } from '../store/slices/auth'
 import { Loader } from '../components'
+import { Helmet } from 'react-helmet'
 
 export type UserT = {
 	username?: string
@@ -48,6 +49,10 @@ const Register: React.FC = () => {
 
 	return (
 		<Container component={'main'} maxWidth={'xs'}>
+			<Helmet>
+				<title>Register</title>
+				<meta name='description' content='the register page' />
+			</Helmet>
 			<CssBaseline />
 			<Box
 				sx={{

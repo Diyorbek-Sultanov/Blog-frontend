@@ -11,6 +11,7 @@ import {
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import { useParams, Link } from 'react-router-dom'
 import moment from 'moment'
+import { Helmet } from 'react-helmet'
 
 import { useAppDispatch } from '../app/hooks/useAppDispatch'
 import { fetchArticleDetail } from '../store/slices/article'
@@ -32,6 +33,10 @@ const ArticleDetail: React.FC = () => {
 
 	return (
 		<Box component={'section'} mt={8}>
+			<Helmet>
+				<title>Article detail</title>
+				<meta name='description' content='the article detail page' />
+			</Helmet>
 			<CssBaseline />
 			<Container maxWidth={'lg'}>
 				{status === 'loading' ? (
